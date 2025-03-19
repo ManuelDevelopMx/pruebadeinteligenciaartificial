@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Web - Pregunta lo que quieras</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { padding: 10px; margin: 5px; font-size: 16px; }
+        #respuesta { font-size: 18px; margin-top: 20px; color: green; }
+    </style>
+</head>
+<body>
+
+    <h2>Pregúntale a la IA</h2>
+    <input type="text" id="pregunta" placeholder="Escribe tu pregunta o cálculo">
+    <button onclick="preguntarIA()">Preguntar</button>
+    <p id="respuesta"></p>
+
+    <script>
+        function preguntarIA() {
+            let pregunta = document.getElementById("pregunta").value;
+            fetch("buscar_respuesta.php?accion=preguntar&pregunta=" + encodeURIComponent(pregunta))
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("respuesta").innerText = data.respuesta;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Agregar Preguntas</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { padding: 10px; margin: 5px; font-size: 16px; }
+        #mensaje { font-size: 18px; margin-top: 20px; color: blue; }
+    </style>
+</head>
+<body>
+
+    <h2>Agregar Nueva Pregunta</h2>
+    <input type="text" id="nuevaPregunta" placeholder="Nueva pregunta">
+    <input type="text" id="nuevaRespuesta" placeholder="Respuesta">
+    <button onclick="agregarPregunta()">Agregar</button>
+    <p id="mensaje"></p>
+
+    <script>
+        function agregarPregunta() {
+            let nuevaPregunta = document.getElementById("nuevaPregunta").value;
+            let nuevaRespuesta = document.getElementById("nuevaRespuesta").value;
+
+            fetch("buscar_respuesta.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "accion=agregar&pregunta=" + encodeURIComponent(nuevaPregunta) + "&respuesta=" + encodeURIComponent(nuevaRespuesta)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("mensaje").innerText = data.mensaje;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>
